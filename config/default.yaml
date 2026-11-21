@@ -1,0 +1,7 @@
+logging:
+  level: INFO
+  file: logs/gcs.log
+
+input:
+  rate_hz: 50
+  deadzone: 0.10
