@@ -31,8 +31,10 @@ class InputSampler(threading.Thread):
             next_tick += self._period
 
 
-            # TODO 3: compute delay = next_tick - time.monotonic()
-            #         if delay > 0: self._stop_event.wait(delay)
-            #         else: we fell behind, so reset next_tick = time.monotonic()
-            pass
+            delay = next_tick - time.monotonic()
+            if delay > 0: 
+                self._stop_event.wait(delay)
+            else: 
+                next_tick = time.monotonic()
+
         log.info("Sampler stopped")

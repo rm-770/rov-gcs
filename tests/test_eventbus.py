@@ -1,4 +1,3 @@
-import queue
 
 from gcs.core.eventbus import EventBus
 from gcs.core.events import ControllerConnected, ControllerDisconnected
