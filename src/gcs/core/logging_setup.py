@@ -20,3 +20,4 @@ def setup_logging(level="INFO", logfile="logs/gcs.log"):
     for handler in (file_handler, console_handler):
         handler.setFormatter(fmt)
         root.addHandler(handler)
+

@@ -1,0 +1,38 @@
+import logging
+import threading
+import time
+
+from gcs.core.events import InputState
+
+log = logging.getLogger(__name__)
+
+
+class InputSampler(threading.Thread):
+    def __init__(self, bus, rate_hz):
+        super().__init__(name="InputSampler", daemon=True)
+        self._bus = bus
+        self._period = 1.0 / rate_hz
+        self._stop_event = threading.Event()
+
+    def stop(self):
+        self._stop_event.set()
+
+    def _read_input(self):
+        """Stub for now: pretend nothing is pressed."""
+        return InputState(axes={"left_x": 0.0}, buttons={})
+
+    def run(self):
+        log.info("Sampler started at %.1f Hz", 1.0 / self._period)
+        next_tick = time.monotonic()
+        while not self._stop_event.is_set():
+            input_state = self._read_input()
+            self._bus.publish(input_state)
+
+            next_tick += self._period
+
+
+            # TODO 3: compute delay = next_tick - time.monotonic()
+            #         if delay > 0: self._stop_event.wait(delay)
+            #         else: we fell behind, so reset next_tick = time.monotonic()
+            pass
+        log.info("Sampler stopped")
