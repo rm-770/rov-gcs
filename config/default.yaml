@@ -4,4 +4,10 @@ logging:
 
 input:
   rate_hz: 50
+  # Fallback dead-zone used before any profile loads. Profiles set their own.
   deadzone: 0.10
+
+profiles:
+  directory: config/profiles
+  # Loaded at startup, before any controller connects.
+  default: default

@@ -1,0 +1,28 @@
+{
+  "name": "ps4",
+  "controllers": ["PS4 Controller"],
+  "default_deadzone": 0.10,
+  "axes": {
+    "axis_0": {"action": "sway", "invert": false},
+    "axis_1": {"action": "surge", "invert": true},
+    "axis_2": {"action": "yaw", "invert": false},
+    "axis_3": {"action": "heave", "invert": true, "deadzone": 0.15},
+    "axis_4": {"action": "tilt_down", "trigger": true, "deadzone": 0.05},
+    "axis_5": {"action": "tilt_up", "trigger": true, "deadzone": 0.05}
+  },
+  "buttons": {
+    "button_0": "light_toggle",
+    "button_1": "gripper_close",
+    "button_2": "gripper_open",
+    "button_3": "camera_toggle",
+    "button_9": "roll_left",
+    "button_10": "roll_right",
+    "button_11": "dpad_up",
+    "button_12": "dpad_down",
+    "button_13": "dpad_left",
+    "button_14": "dpad_right",
+    "key_space": "light_toggle",
+    "key_w": "surge_forward",
+    "key_s": "surge_backward"
+  }
+}

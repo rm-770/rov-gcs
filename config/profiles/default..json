@@ -1,0 +1,18 @@
+{
+  "name": "default",
+  "controllers": [],
+  "default_deadzone": 0.10,
+  "axes": {
+    "axis_0": {"action": "sway", "invert": false},
+    "axis_1": {"action": "surge", "invert": true},
+    "axis_2": {"action": "yaw", "invert": false},
+    "axis_3": {"action": "heave", "invert": true, "deadzone": 0.15}
+  },
+  "buttons": {
+    "button_0": "light_toggle",
+    "button_1": "gripper_close",
+    "key_space": "light_toggle",
+    "key_w": "surge_forward",
+    "key_s": "surge_backward"
+  }
+}
