@@ -5,7 +5,7 @@ from gcs.core.config import load_config
 from gcs.core.eventbus import EventBus
 from gcs.core.events import InputState
 from gcs.core.logging_setup import setup_logging
-from gcs.input.devices import GamepadDevice
+from gcs.input.devices import GamepadDevice, KeyboardDevice   # CHANGED: import both
 from gcs.input.sampler import InputSampler
 
 
@@ -21,16 +21,27 @@ def main():
     bus = EventBus()
     q = bus.subscribe(InputState, maxsize=500)
 
-    device = GamepadDevice()
-    log.info("Using controller: %s", device.name)
+    gamepad = GamepadDevice()                                  # CHANGED
+    keyboard = KeyboardDevice()                                # CHANGED
+    log.info("Using controller: %s", gamepad.name)
 
-    sampler = InputSampler(bus, config["input"]["rate_hz"], device)
+    sampler = InputSampler(
+        bus,
+        config["input"]["rate_hz"],
+        devices=[gamepad, keyboard],
+        deadzone=config["input"]["deadzone"],
+    )
     sampler.start()
     try:
         time.sleep(2)
     finally:
         sampler.stop()
         sampler.join()
+        keyboard.close()                
+        last = None
+        while not q.empty():
+            last = q.get_nowait()
+            log.info("Last state: %s", last)                       # stop pynput's thread
 
     log.info("Received %d input states in 2 s", q.qsize())
 

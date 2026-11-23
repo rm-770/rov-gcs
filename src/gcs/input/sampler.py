@@ -3,6 +3,7 @@ import threading
 import time
 
 from gcs.core.events import InputState
+from gcs.input.deadzone import apply_deadzone_to_axes
 
 log = logging.getLogger(__name__)
 
@@ -14,6 +15,7 @@ class InputSampler(threading.Thread):
         self._period = 1.0 / rate_hz
         self._stop_event = threading.Event()
         self._device = device
+        self._deadzone = deadzone
 
     def _read_input(self):
         axes, buttons, hat = {}, {}, (0, 0)
@@ -23,6 +25,7 @@ class InputSampler(threading.Thread):
             buttons.update(state["buttons"])
             if state["hat"] != (0, 0):
                 hat = state["hat"]
+        axes = apply_deadzone_to_axes(axes, self._deadzone)
         return InputState(axes=axes, buttons=buttons, hat=hat)
 
     def stop(self):
