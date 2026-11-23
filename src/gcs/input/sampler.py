@@ -9,12 +9,12 @@ log = logging.getLogger(__name__)
 
 
 class InputSampler(threading.Thread):
-    def __init__(self, bus, rate_hz, device):
+    def __init__(self, bus, rate_hz, devices, deadzone=0.0):
         super().__init__(name="InputSampler", daemon=True)
         self._bus = bus
         self._period = 1.0 / rate_hz
         self._stop_event = threading.Event()
-        self._device = device
+        self._devices = devices
         self._deadzone = deadzone
 
     def _read_input(self):

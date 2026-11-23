@@ -1,9 +1,9 @@
+import threading
 from abc import ABC, abstractmethod
 
 import pygame
-import threading
-
 from pynput import keyboard
+
 
 class InputDevice(ABC):
     """Anything that can be asked for its current state."""
@@ -50,12 +50,10 @@ class KeyboardDevice(InputDevice):
     def _on_press(self, key):
         with self._lock:
             self._pressed.add(self._key_name(key))
-        pass
 
     def _on_release(self, key):
         with self._lock:
             self._pressed.discard(self._key_name(key))
-        pass
 
     def read(self):
         with self._lock:

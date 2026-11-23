@@ -5,7 +5,7 @@ from gcs.core.config import load_config
 from gcs.core.eventbus import EventBus
 from gcs.core.events import InputState
 from gcs.core.logging_setup import setup_logging
-from gcs.input.devices import GamepadDevice, KeyboardDevice   # CHANGED: import both
+from gcs.input.devices import GamepadDevice, KeyboardDevice
 from gcs.input.sampler import InputSampler
 
 

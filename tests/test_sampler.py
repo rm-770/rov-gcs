@@ -15,7 +15,7 @@ class FakeDevice:
 def test_sampler_publishes_at_roughly_the_configured_rate():
     bus = EventBus()
     q = bus.subscribe(InputState, maxsize=1000)
-    sampler = InputSampler(bus, rate_hz=50, device=FakeDevice())
+    sampler = InputSampler(bus, rate_hz=50, devices=[FakeDevice()])
 
     sampler.start()
     time.sleep(1.0)
