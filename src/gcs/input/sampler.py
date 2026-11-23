@@ -8,11 +8,16 @@ log = logging.getLogger(__name__)
 
 
 class InputSampler(threading.Thread):
-    def __init__(self, bus, rate_hz):
+    def __init__(self, bus, rate_hz, device):
         super().__init__(name="InputSampler", daemon=True)
         self._bus = bus
         self._period = 1.0 / rate_hz
         self._stop_event = threading.Event()
+        self._device = device
+
+    def _read_input(self):
+        state = self._device.read()
+        return InputState(axes=state["axes"], buttons=state["buttons"], hat=state["hat"])
 
     def stop(self):
         self._stop_event.set()
