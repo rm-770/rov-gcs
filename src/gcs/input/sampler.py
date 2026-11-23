@@ -16,8 +16,14 @@ class InputSampler(threading.Thread):
         self._device = device
 
     def _read_input(self):
-        state = self._device.read()
-        return InputState(axes=state["axes"], buttons=state["buttons"], hat=state["hat"])
+        axes, buttons, hat = {}, {}, (0, 0)
+        for device in self._devices:
+            state = device.read()
+            axes.update(state["axes"])
+            buttons.update(state["buttons"])
+            if state["hat"] != (0, 0):
+                hat = state["hat"]
+        return InputState(axes=axes, buttons=buttons, hat=hat)
 
     def stop(self):
         self._stop_event.set()
